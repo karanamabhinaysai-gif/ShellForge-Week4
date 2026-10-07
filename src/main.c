@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "input.h"
 #include "parser.h"
 #include "process.h"
@@ -8,6 +9,7 @@
 #include "signals.h"
 #include "pipes.h"
 #include "redirect.h"
+#include "thread.h"
 
 static void tokenize(char *str, char **argv)
 {
@@ -29,11 +31,11 @@ int main()
     char **tokens;
 
     initialize_signals();
+    start_monitor_thread();
 
     while (1)
     {
         printf("myshell> ");
-
         line = read_line();
 
         if (strlen(line) == 0)
